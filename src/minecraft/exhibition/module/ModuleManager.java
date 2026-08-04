@@ -290,8 +290,13 @@ public class ModuleManager<E extends Module> extends AbstractManager<Module> {
             for (String line : fileContent) {
                 try {
                     String[] split = line.split(":");
+                    // Old format is name:enabled:bind:hidden, new format is name:enabled:hidden:held.
+                    // Both carry four fields, so the length cannot tell them apart; the only reliable
+                    // discriminator is split[2], which parses as an integer keybind in the old format
+                    // and as a boolean 'hidden' flag in the new one.
+                    boolean oldFormat = split.length > 3 && isBindField(split[2]);
                     // The client recognizes that the Mods file is new
-                    if (split.length >= 3) {
+                    if (split.length >= 3 && !oldFormat) {
                         String displayName = split[0];
                         for (Module module : Client.getModuleManager().getArray()) {
                             if (module.getName().equalsIgnoreCase(displayName)) {
@@ -319,7 +324,7 @@ public class ModuleManager<E extends Module> extends AbstractManager<Module> {
                             notEmpty = true;
                         }
                         isNew = true;
-                    } else {
+                    } else if (oldFormat) {
                         String displayName = split[0];
                         for (Module module : Client.getModuleManager().getArray()) {
                             if (module.getName().equalsIgnoreCase(displayName)) {
@@ -367,6 +372,20 @@ public class ModuleManager<E extends Module> extends AbstractManager<Module> {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Tells an old-format Mods.txt line from a new-format one. The third field holds the
+     * keybind in the old format and the 'hidden' flag in the new one, and only the former
+     * parses as an integer.
+     */
+    private static boolean isBindField(String value) {
+        try {
+            Integer.parseInt(value);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
         }
     }
 
