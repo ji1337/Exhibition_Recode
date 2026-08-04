@@ -1,0 +1,32 @@
+# ---- Build output ----
+/bin/
+/out/
+target/
+*.class
+
+# ---- Minecraft runtime data (game assets, saves, configs) ----
+# Not required to build: the project resolves dependencies from /libs
+# via .idea/libraries/libs.xml, not from the legacy MCP /jars layout.
+/jars/
+
+# ---- Agent / tooling artifacts ----
+/.codex-artifacts/
+local_history.patch
+
+# ---- IDE ----
+# NOTE: .idea/ and Client.iml are the build system for this project
+# (no Maven/Gradle). They are tracked on purpose. IDEA's own
+# .idea/.gitignore excludes the volatile parts (workspace.xml, shelf/).
+.idea/workspace.xml
+.idea/shelf/
+.idea/tasks.xml
+.idea/usage.statistics.xml
+.idea/dictionaries/
+.idea/httpRequests/
+.idea/copilot/
+.vscode/
+
+# ---- OS junk ----
+.DS_Store
+Thumbs.db
+desktop.ini
