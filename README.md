@@ -1,7 +1,6 @@
 # Exhibition Client Source
 
 > **This is a fork of [ExhibitionSource/exhibition-client](https://github.com/ExhibitionSource/exhibition-client).**
-> Everything from *"Why is this repository public?"* onward is the original author's text,
 > preserved unchanged. What this fork changes is listed below.
 
 ## Changes in this fork
